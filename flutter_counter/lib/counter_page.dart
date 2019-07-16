@@ -8,7 +8,6 @@ class CounterPage extends StatelessWidget {
     final CounterBloc _counterBloc = BlocProvider.of<CounterBloc>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Counter')),
       body: BlocBuilder<CounterEvent, int>(
         bloc: _counterBloc,
         builder: (BuildContext context, int count) {
@@ -20,30 +19,39 @@ class CounterPage extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.0),
-            child: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                _counterBloc.dispatch(CounterEvent.increment);
-              },
-            ),
+      floatingActionButton: CountButtons(),
+    );
+  }
+}
+
+class CountButtons extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final CounterBloc _counterBloc = BlocProvider.of<CounterBloc>(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 5.0),
+          child: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
+              _counterBloc.dispatch(CounterEvent.increment);
+            },
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.0),
-            child: FloatingActionButton(
-              child: Icon(Icons.remove),
-              onPressed: () {
-                _counterBloc.dispatch(CounterEvent.decrement);
-              },
-            ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 5.0),
+          child: FloatingActionButton(
+            child: Icon(Icons.remove),
+            onPressed: () {
+              _counterBloc.dispatch(CounterEvent.decrement);
+            },
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }
